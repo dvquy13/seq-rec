@@ -1,0 +1,3 @@
+event_weight:
+  View_Merchant: 1
+  Transaction_Success: 5

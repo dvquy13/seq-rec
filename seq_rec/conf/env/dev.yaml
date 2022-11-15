@@ -1,0 +1,33 @@
+gcp:
+  project_id: seq-rec-gcp-project-id
+  service_account: ml-job-sa
+  service_account_email: ${.service_account}@${.project_id}.iam.gserviceaccount.com
+  endpoint:
+    location: asia-southeast1
+    name: seq_rec
+    container_image_uri: asia-docker.pkg.dev/vertex-ai/prediction/tf2-cpu.2-7:latest
+    machine_type: n1-standard-2
+    min_replica_count: 1
+    max_replica_count: 1
+
+io:
+  training:
+    bigquery:
+      project_id: ${env.gcp.project_id}
+      location: 'us'
+      dataset_id: 'data_science_dbt'
+      train_table_id: 'fct_seq_rec_build_output_training_pad_30d'
+      validation_table_id: 'fct_seq_rec_build_output_training_pad_val'
+      test_table_id: 'fct_seq_rec_build_output_training_pad_test'
+      full_table_id: 'fct_seq_rec_build_output_training_pad_val_test_combined'
+    local_path: 'data'
+    applied_country_code: ['SG']
+
+pipeline:
+  kubeflow:
+    region: asia-southeast1
+    bucket_name: recsys-pipeline
+    bucket_url: gs://${.bucket_name}
+    bucket_dir: seq_rec
+    main_image_uri: asia.gcr.io/seq-rec-gcp-project-id/seq-rec:0.2.5
+    tfdv_image_uri: asia.gcr.io/seq-rec-gcp-project-id/tfdv:latest

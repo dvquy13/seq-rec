@@ -1,0 +1,7 @@
+embedding_dimension: 64
+time_recency_num_buckets: 61
+max_search_term_tokens: 10000
+learning_rate: 0.003
+epochs: 30
+batch_size: 256
+val_metric: 'val_factorized_top_k/top_10_categorical_accuracy'

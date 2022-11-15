@@ -1,0 +1,12 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'docker pull asia.gcr.io/seq-rec-gcp-project-id/seq-rec:0.1.0 || exit 0']
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+            'build',
+            '-t', 'asia.gcr.io/seq-rec-gcp-project-id/seq-rec:0.1.1',
+            '--cache-from', 'asia.gcr.io/seq-rec-gcp-project-id/seq-rec:0.1.0',
+            '.'
+        ]
+images: ['asia.gcr.io/seq-rec-gcp-project-id/seq-rec:0.1.1']
